@@ -1,5 +1,5 @@
 {
-  "name": "gulal",
+  "name": "@debkosh/gulal",
   "version": "0.1.0",
   "description": "Colours made for where they sit: random, seeded or from text, in palettes that sit well together, and for any background the border and inks that read on it.",
   "type": "module",
@@ -13,6 +13,7 @@
   },
   "files": ["dist", "README.md", "LICENSE"],
   "sideEffects": false,
+  "publishConfig": { "access": "public" },
   "scripts": {
     "build": "tsc -p .",
     "test": "npm run build && node test/vectors.test.mjs && node test/api.test.mjs",

@@ -5,7 +5,7 @@ together, and for any background the border and inks that read on it. The same o
 Go package, checked by shared test vectors.
 
 ```ts
-import { env } from 'gulal';
+import { env } from '@debkosh/gulal';
 
 const gulal = env({ scheme: 'light', background: '#ffffff', accent: '#0faaaa' });
 gulal.fromText('news.example.com').soft; // { background, border, ink, muted, tonal, … }

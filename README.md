@@ -23,7 +23,7 @@ Gulal is the coloured powder of Holi.
 ## A look
 
 ```ts
-import { env } from 'gulal';
+import { env } from '@debkosh/gulal';
 
 const gulal = env({ scheme: 'light', background: '#ffffff', accent: '#0faaaa' });
 
@@ -57,7 +57,7 @@ card.Harmony().Triadic
 ## Install
 
 ```sh
-npm install gulal
+npm install @debkosh/gulal
 go get github.com/sudiptadeb/gulal
 ```
 
