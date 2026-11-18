@@ -168,6 +168,9 @@ cd js && npm run vectors             # rewrite the vectors from the TypeScript
 python3 -m http.server               # then open /playground/ (after npm run build)
 ```
 
+To release, set the version in `js/package.json`, tag `vX.Y.Z` and push it (the Go module is
+the tag), then `js/publish.sh vX.Y.Z` publishes the npm package.
+
 ## Licence
 
 MIT.
