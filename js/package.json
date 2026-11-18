@@ -1,6 +1,6 @@
 {
   "name": "@debkosh/gulal",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Colours made for where they sit: random, seeded or from text, in palettes that sit well together, and for any background the border and inks that read on it.",
   "type": "module",
   "main": "./dist/gulal.js",
