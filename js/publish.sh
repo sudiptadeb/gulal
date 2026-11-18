@@ -4,7 +4,7 @@
 #   js/publish.sh v1.2.3 [--dry-run]
 #
 # Refuses a version that doesn't match package.json, runs the tests on a fresh build, then
-# publishes. npm asks for your 2FA in the browser.
+# publishes. CI runs it on a tag (.github/workflows/npm.yml); run by hand, npm asks for 2FA.
 set -eu
 VERSION=${1:?usage: js/publish.sh vX.Y.Z [--dry-run]}
 shift

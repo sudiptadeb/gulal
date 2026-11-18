@@ -1,0 +1,28 @@
+name: npm
+
+# A v* tag publishes js/ as the npm package, from this workflow as the package's trusted
+# publisher, so no npm token is stored. js/package.json must already carry the tag's version.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Tag to publish, e.g. v1.2.3'
+        required: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.version || github.ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: js/publish.sh "${{ inputs.version || github.ref_name }}"

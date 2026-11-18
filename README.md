@@ -169,7 +169,7 @@ python3 -m http.server               # then open /playground/ (after npm run bui
 ```
 
 To release, set the version in `js/package.json`, tag `vX.Y.Z` and push it (the Go module is
-the tag), then `js/publish.sh vX.Y.Z` publishes the npm package.
+the tag), and `.github/workflows/npm.yml` publishes the npm package from that tag.
 
 ## Licence
 
