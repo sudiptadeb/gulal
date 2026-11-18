@@ -36,6 +36,8 @@ type Options struct {
 	Accent string
 	// Contrast is "apca" (the default, also for "") or "wcag2".
 	Contrast string
+	// Text is the contrast text reads at: 0 means Lc 60 for APCA, 4.5 for WCAG 2.
+	Text float64
 	// Hues are the bands, in degrees, hues may fall in. nil means all of them.
 	Hues [][2]float64
 	// Avoid holds colours (hex, "#" optional) or hues (plain numbers such as "350") to keep
@@ -91,6 +93,7 @@ type resolved struct {
 	chroma   float64
 	hasC     bool // chroma is set
 	measure  string
+	text     float64 // the level text reads at
 	bands    []interval
 	avoid    []float64
 	spread   float64
@@ -122,6 +125,13 @@ func resolve(o Options) (*resolved, error) {
 	}
 	if r.spread == 0 {
 		r.spread = 25
+	}
+	if o.Text < 0 {
+		return nil, fmt.Errorf("gulal: not a contrast level: %v", o.Text)
+	}
+	r.text = o.Text
+	if r.text == 0 {
+		r.text = levelsOf(r.measure).ink
 	}
 	if o.Background != "" {
 		c, err := parse(o.Background)
@@ -271,6 +281,9 @@ func (e *Env) replayOf(method string, args []kv, at uint32) string {
 	put("bg", o.Background)
 	put("accent", o.Accent)
 	put("contrast", o.Contrast)
+	if o.Text != 0 {
+		put("text", jsNum(o.Text))
+	}
 	if o.Hues != nil {
 		hs := make([]string, len(o.Hues))
 		for i, p := range o.Hues {
@@ -666,6 +679,9 @@ func Replay(s string) (Palette, error) {
 		o.Hues = append(o.Hues, [2]float64{fa, fb})
 	}
 	if o.Spread, err = num("espread"); err != nil {
+		return Palette{}, err
+	}
+	if o.Text, err = num("text"); err != nil {
 		return Palette{}, err
 	}
 	if o.Seed == "" {

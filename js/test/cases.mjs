@@ -14,6 +14,9 @@ const envs = [
   { contrast: 'wcag2', background: '#ffffff', accent: '#5b7fd6' },
   { hues: [[180, 300]], scheme: 'dark' },
   { inks: ['#fff4d6', '#14213d'], background: '#ffffff', accent: '#d82b1f' },
+  { text: 75, scheme: 'light', accent: '#0faaaa' },
+  { text: 75, scheme: 'dark', accent: '#faa804' },
+  { text: 7, contrast: 'wcag2', background: '#f6efe3' },
 ];
 
 export const cases = envs.map((e) => ({ env: { seed: 'vectors', ...e } }));

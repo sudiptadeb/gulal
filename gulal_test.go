@@ -20,6 +20,7 @@ type vecEnv struct {
 	Background string            `json:"background"`
 	Accent     string            `json:"accent"`
 	Contrast   string            `json:"contrast"`
+	Text       float64           `json:"text"`
 	Hues       [][2]float64      `json:"hues"`
 	Avoid      []json.RawMessage `json:"avoid"`
 	Spread     float64           `json:"spread"`
@@ -63,7 +64,7 @@ func optionsOf(raw json.RawMessage) Options {
 	if err := json.Unmarshal(raw, &v); err != nil {
 		panic(err)
 	}
-	return Options{Seed: v.Seed, Scheme: v.Scheme, Background: v.Background, Accent: v.Accent, Contrast: v.Contrast,
+	return Options{Seed: v.Seed, Scheme: v.Scheme, Background: v.Background, Accent: v.Accent, Contrast: v.Contrast, Text: v.Text,
 		Hues: v.Hues, Avoid: avoidList(v.Avoid), Spread: v.Spread, Inks: v.Inks}
 }
 

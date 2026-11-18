@@ -42,7 +42,7 @@ func newSwatch(r *resolved, bg rgb8, around *rgb8, inks []rgb8) *Swatch {
 	if r.scheme != "" {
 		s.c.prefersUp = r.scheme == "dark"
 	}
-	s.level = levelsOf(r.measure).ink
+	s.level = r.text
 	s.baseH = H
 	if C < 0.02 {
 		s.baseH = 0

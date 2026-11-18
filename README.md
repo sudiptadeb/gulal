@@ -12,7 +12,7 @@ strong as the theme, deep or pale enough for its background, and with inks that 
 - **Palettes that work.** Random ones kept apart instead of clumped, fluent ones that sit well
   side by side, distinct ones as different as the place allows.
 - **Swatches for any background,** yours or gulal's: a border, an ink, a muted ink, tonal and
-  complementary ink, the accent, and every colour-wheel relation, each held to APCA Lc 60.
+  complementary ink, the accent, and every colour-wheel relation, each held to APCA Lc 60, or the level the environment's `text` asks for.
 - **Two reference implementations,** Go and TypeScript, giving the same hex strings, checked
   by one shared file of test vectors. No dependencies.
 

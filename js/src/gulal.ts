@@ -20,6 +20,8 @@ export interface EnvOptions {
   accent?: Hex;
   /** How readability is measured. */
   contrast?: Measure;
+  /** The contrast text reads at: Lc 60 for APCA, 4.5 for WCAG 2, unless given. */
+  text?: number;
   /** Bands, in degrees, that hues may fall in. */
   hues?: [number, number][];
   /** Colours or hues to keep away from. */
@@ -320,6 +322,7 @@ interface Resolved {
   accentH?: number; // only when the accent has a hue
   chroma?: number; // when the accent sets it
   measure: Measure;
+  text: number; // the level text reads at
   bands: Interval[];
   avoid: number[];
   spread: number;
@@ -342,6 +345,7 @@ function resolve(o: EnvOptions): Resolved {
       accentH = aH;
     }
   }
+  if (o.text !== undefined && !(o.text > 0)) throw new Error(`gulal: not a contrast level: ${o.text}`);
   const avoid: number[] = [];
   for (const a of o.avoid ?? []) {
     const h = hueOf(a);
@@ -357,6 +361,7 @@ function resolve(o: EnvOptions): Resolved {
     accentH,
     chroma,
     measure: o.contrast ?? 'apca',
+    text: o.text ?? LEVELS[o.contrast ?? 'apca'].ink,
     bands: bandsOf(o.hues),
     avoid,
     spread: o.spread ?? 25,
@@ -401,6 +406,7 @@ export class Gulal {
     put('bg', o.background);
     put('accent', o.accent);
     put('contrast', o.contrast);
+    put('text', o.text);
     put('hues', o.hues?.map(([a, b]) => `${a}..${b}`).join(','));
     put('eavoid', avoidList(o.avoid));
     put('espread', o.spread);
@@ -572,6 +578,7 @@ export class Gulal {
       background: kv.bg,
       accent: kv.accent,
       contrast: kv.contrast as Measure | undefined,
+      text: kv.text ? Number(kv.text) : undefined,
       hues: kv.hues ? (kv.hues.split(',').map((p) => p.split('..').map(Number)) as [number, number][]) : undefined,
       avoid: list(kv.eavoid) as (Hex | number)[] | undefined,
       spread: kv.espread ? Number(kv.espread) : undefined,
@@ -683,7 +690,7 @@ export class Colour {
     L0 += this.shift;
     const fill = rgb(L0, this.chroma, this.hue);
     const ink = best(r.inks.length ? r.inks : [WHITE, NEAR_BLACK], fill, this.ctx().score);
-    const level = LEVELS[r.measure].ink;
+    const level = r.text;
     let out = fill;
     if (this.ctx().score(ink, fill) < level) {
       // move the fill away from its ink until the ink reads
@@ -745,7 +752,7 @@ export class Colour {
     if (this.cache.ink) return this.cache.ink;
     const page = this.page();
     const light = !this.r.pageDark;
-    return (this.cache.ink = hexOf(reach(light ? 0.5 : 0.8, Math.min(Math.max(this.chroma * 1.3, 0.06), 0.15), this.hue, page, LEVELS[this.r.measure].ink, this.ctx())));
+    return (this.cache.ink = hexOf(reach(light ? 0.5 : 0.8, Math.min(Math.max(this.chroma * 1.3, 0.06), 0.15), this.hue, page, this.r.text, this.ctx())));
   }
 
   /** Its colour as a dot or a line on the environment's background. */
@@ -810,7 +817,7 @@ export class Swatch {
     this.bg = bg;
     this.light = score(NEAR_BLACK, bg) >= score(WHITE, bg);
     this.c = { score, prefersUp: r.scheme ? r.scheme === 'dark' : !this.light };
-    this.level = LEVELS[r.measure].ink;
+    this.level = r.text;
     this.baseH = C < 0.02 ? (r.accentH ?? 0) : H;
     this.background = hexOf(bg);
 

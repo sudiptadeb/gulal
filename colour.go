@@ -78,7 +78,7 @@ func (c *Colour) fill() rgb8 {
 	}
 	score := c.ctx().score
 	ink := best(inks, fill, score)
-	level := levelsOf(r.measure).ink
+	level := r.text
 	if score(ink, fill) >= level {
 		return fill
 	}
@@ -179,7 +179,7 @@ func (c *Colour) Ink() string {
 		if !c.r.pageDark {
 			L0 = 0.5
 		}
-		c.ink = hexOf(reach(L0, c.inkC(), c.hue, c.page(), levelsOf(c.r.measure).ink, c.ctx()))
+		c.ink = hexOf(reach(L0, c.inkC(), c.hue, c.page(), c.r.text, c.ctx()))
 	})
 	return c.ink
 }

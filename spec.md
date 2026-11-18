@@ -25,7 +25,7 @@ swatch for each look, soft and solid. A swatch is any background with what goes 
 ## 2. The environment
 
 ```ts
-const gulal = env({ seed, scheme, background, accent, contrast, hues, avoid, spread, inks })
+const gulal = env({ seed, scheme, background, accent, contrast, text, hues, avoid, spread, inks })
 ```
 
 | Option | Default | Meaning |
@@ -35,6 +35,7 @@ const gulal = env({ seed, scheme, background, accent, contrast, hues, avoid, spr
 | `background` | none | the surface the colours sit on |
 | `accent` | none | the colour they live beside |
 | `contrast` | `'apca'` | `'apca'` or `'wcag2'` |
+| `text` | Lc 60, or 4.5 under `wcag2` | the contrast text reads at (§6); a number above 0 |
 | `hues` | `[[0, 360]]` | bands `[from, to]` in degrees; a band with `from > to` wraps through 0 |
 | `avoid` | none | colours (hex) or hues (numbers) to keep away from; a colour with chroma below 0.02 is ignored |
 | `spread` | 25 | degrees kept clear either side of each `avoid` |
@@ -251,6 +252,8 @@ SplitMix32 over the hash of the seed: the `k`-th draw (k = 1, 2, …) is
 | Use | APCA (default) | WCAG 2 |
 |---|---|---|
 | ink: a swatch's inks, `turn()`, `colour.ink`, a fill's ink | Lc 60 | 4.5 |
+
+The ink level is the environment's `text` when given (Lc 75 suits letters under 24px).
 | border against `around` | Lc 15 | 1.3 |
 | `colour.mark` | Lc 30 | 3 |
 
@@ -268,7 +271,7 @@ gulal1;<method>;<call options>;<environment>;seed=<seed>;at=<draws before the ca
 ```
 
 Call options: `n`, `avoid`, `spread`, `independent=1`, `arc`, `from`. Environment:
-`scheme`, `bg`, `accent`, `contrast`, `hues` (`a..b,a..b`), `eavoid`, `espread`, `inks`.
+`scheme`, `bg`, `accent`, `contrast`, `text`, `hues` (`a..b,a..b`), `eavoid`, `espread`, `inks`.
 Avoid lists are comma-separated, colours as `#rrggbb` and hues as plain numbers; an entry
 that starts with `#` is a colour. Absent values are left out. In values, only `%`, `;` and `=` are escaped, as `%`
 and two upper-case hex digits. `replay(s)` rebuilds the environment, sets its count to `at`
