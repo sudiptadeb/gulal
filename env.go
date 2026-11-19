@@ -560,6 +560,15 @@ func (e *Env) Next(existing []string) *Colour {
 	return e.colour(H, e.fixedChroma(), 0.6, e.r.page == nil)
 }
 
+// Hue is a colour at hue h, as Distinct's and Next's are made: for a hue kept from one of
+// them. It returns nil when h is not a number.
+func (e *Env) Hue(h float64) *Colour {
+	if math.IsNaN(h) || math.IsInf(h, 0) {
+		return nil
+	}
+	return e.colour(wrap(h), e.fixedChroma(), 0.6, e.r.page == nil)
+}
+
 // Adapt is a colour you already have, its hue kept, made at home in this environment. It
 // returns nil when hex is not a colour.
 func (e *Env) Adapt(hex string) *Colour {

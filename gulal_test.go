@@ -143,6 +143,10 @@ func call(g *Env, c vecCall) any {
 		return colourOut(g.Next(list))
 	case "adapt":
 		return colourOut(g.Adapt(str(0)))
+	case "hue":
+		var h float64
+		mustArg(c.Args[0], &h)
+		return colourOut(g.Hue(h))
 	case "swatch":
 		return swatchOut(g.Swatch(str(0), SwatchOptions{Around: o.Around, Inks: o.Inks}))
 	case "contrast":

@@ -539,6 +539,12 @@ export class Gulal {
     return this.colour(H, this.chromaFor(this.r.chroma === undefined ? 0.5 : undefined), this.r.page ? undefined : 0.6);
   }
 
+  /** A colour at this hue, as distinct's and next's are made: for a hue kept from one of them. */
+  hue(h: number): Colour {
+    if (!Number.isFinite(h)) throw new Error(`gulal: not a hue: ${h}`);
+    return this.colour(wrap(h), this.chromaFor(this.r.chroma === undefined ? 0.5 : undefined), this.r.page ? undefined : 0.6);
+  }
+
   /** A colour you already have, its hue kept, made at home in this environment. */
   adapt(hex: Hex): Colour {
     const [, C0, H0] = lch(parse(hex));

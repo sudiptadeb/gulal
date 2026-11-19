@@ -42,7 +42,7 @@ export function steps() {
   for (const t of texts) s.push(['fromText', [t]]);
   s.push(['random', []], ['random', []], ['random', [5]], ['random', [4, { avoid: ['#3470d0'], spread: 30 }]], ['random', [3, { independent: true }]]);
   s.push(['fluent', [6]], ['fluent', [4, { arc: 90, from: 'project-x' }]], ['fluent', [30]], ['fluent', [3, { from: 'random' }]]);
-  s.push(['distinct', [5]], ['distinct', [3, { from: 'random' }]], ['next', [['#3470d0', '#d03434']]], ['adapt', ['#3470d0']], ['adapt', ['#777777']]);
+  s.push(['distinct', [5]], ['distinct', [3, { from: 'random' }]], ['next', [['#3470d0', '#d03434']]], ['adapt', ['#3470d0']], ['adapt', ['#777777']], ['hue', [200]], ['hue', [-30.5]]);
   for (const b of backgrounds) s.push(['swatch', [b]]);
   s.push(['swatch', ['#5b2a86', { around: '#5b2a86' }]], ['swatch', ['#f6efe3', { inks: ['#14213d', '#fff4d6'] }]]);
   for (const [a, b] of [['#ffffff', '#5b2a86'], ['#1f1f1f', '#ffffff'], ['#777777', '#888888']]) s.push(['contrast', [a, b]]);

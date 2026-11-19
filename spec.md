@@ -64,6 +64,7 @@ Resolved values:
 | `distinct(n, { from, avoid, spread })` | a Palette of `n` | when `from` is `'random'` |
 | `next(existing)` | a Colour | no |
 | `adapt(hex)` | a Colour | no |
+| `hue(h)` | a Colour | no |
 | `swatch(background, { around, inks })` | a Swatch | no |
 | `contrast(ink, background)` | a number | no |
 | `replay(string)` | a Colour or a Palette | — |
@@ -116,7 +117,14 @@ the first allowed hue if `existing` is empty). No lean; `C` as fluent; `L` 0.6 w
 Its hue, leaned. `C` is the environment's, or the colour's own clamped to 0.04–0.15 when
 there is no accent, then the page floor (§5.6). `L` 0.6 when there is no page.
 
-### 3.8 A Colour
+### 3.8 hue(h)
+
+A colour at hue `h` (wrapped to 0–360), made as distinct's and next's are: no lean, and
+neither the allowed hues nor the avoided ones apply; `C` as fluent; `L` 0.6 with no page. It
+draws a hue kept from one of them in another environment, as a palette offered as
+suggestions keeps the user's pick as its hue and draws it again for each theme.
+
+### 3.9 A Colour
 
 | Field | What it is |
 |---|---|
@@ -280,10 +288,10 @@ and makes the call again. A string that does not start with `gulal1` is refused.
 ## 8. The Go package
 
 The same methods, in Go's style: `New(Options) *Env` and `Env.RandomN`, `FromText`, `Fluent`,
-`Distinct`, `Next`, `Adapt`, `Swatch`, `Contrast`; `Replay(s) (Palette, error)`, where a
+`Distinct`, `Next`, `Adapt`, `Hue`, `Swatch`, `Contrast`; `Replay(s) (Palette, error)`, where a
 single colour replays as a palette of one. Go has no union types, so an avoid entry is a
 colour when it starts with `#`, else a hue; zero values mean the defaults. Bad input gives
-nil (`New` when `Options.Validate()` fails, `Adapt`, `Next`, `Swatch`), NaN from `Contrast`,
+nil (`New` when `Options.Validate()` fails, `Adapt`, `Next`, `Hue`, `Swatch`), NaN from `Contrast`,
 or an empty palette, never a panic.
 
 Go's maths functions and JavaScript's can differ in the last bit. The rules above round to

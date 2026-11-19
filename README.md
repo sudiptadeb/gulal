@@ -108,6 +108,7 @@ of all hashed colours come out green or purple.
 | `distinct(n, { from, avoid })` | the `n` most different, the same every time |
 | `next(existing)` | the one colour farthest from those in use |
 | `adapt(hex)` | a colour you have, its hue kept, made at home here |
+| `hue(h)` | the colour at a hue, as `distinct` and `next` make it: keep a pick as its hue, draw it again for another theme |
 
 A palette is an array of colours. A colour has:
 
